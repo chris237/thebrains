@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_school_faculty_tree" model="ir.ui.view">
+        <field name="name">school.faculty.tree</field>
+        <field name="model">school.faculty</field>
+        <field name="arch" type="xml">
+            <tree string="Faculties">
+                <field name="name"/>
+                <field name="reference"/>
+                <field name="campus_ids" widget="many2many_tags"/>
+                <field name="dean_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_school_faculty_form" model="ir.ui.view">
+        <field name="name">school.faculty.form</field>
+        <field name="model">school.faculty</field>
+        <field name="arch" type="xml">
+            <form string="Faculty">
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                        <field name="reference"/>
+                        <field name="dean_id" options="{'no_create': False}"/>
+                    </group>
+                    <group string="Campuses">
+                        <field name="campus_ids" widget="many2many_tags" options="{'no_create': False}"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_school_faculty" model="ir.actions.act_window">
+        <field name="name">Faculties</field>
+        <field name="res_model">school.faculty</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_school_faculty" name="Faculties" parent="menu_school_root" action="action_school_faculty" sequence="20"/>
+</odoo>
