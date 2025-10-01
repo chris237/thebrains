@@ -144,9 +144,23 @@
                         </list>
                     </field>
                 </page>
+                <page string="Cours enseignés" attrs="{'invisible': [('is_teacher', '=', False)]}">
+                    <field name="teacher_course_ids" context="{'default_teacher_id': active_id}">
+                        <tree editable="bottom">
+                            <field name="course_id"/>
+                            <field name="campus_ids" widget="many2many_tags" domain="[('id', 'in', course_id.campus_ids.ids)]"/>
+                        </tree>
+                        <form string="Cours enseigné">
+                            <group>
+                                <field name="course_id"/>
+                                <field name="campus_ids" widget="many2many_tags" domain="[('id', 'in', course_id.campus_ids.ids)]"/>
+                            </group>
+                        </form>
+                    </field>
+                </page>
             </xpath>
         </field>
-        </record>   
+        </record>
 
     <!-- Menus-->
     <!-- <menuitem id="menu_brains_employee" name="Employes" parent="menu_brains_root" action="action_employee"/> -->
