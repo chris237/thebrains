@@ -198,6 +198,7 @@
         <field name="arch" type="xml">
             <list>
                 <field name="name"/>
+                <field name="campus_ids" widget="many2many_tags"/>
                 <field name="employee_id"/>
                 <field name="employee_email"/>
                 <field name="employee_phone"/>
@@ -214,7 +215,7 @@
                 <sheet>
                     <group string="Informations">
                         <field name="name"/>
-                        <field name="campus_id"/>
+                        <field name="campus_ids" widget="many2many_tags" options="{'no_create': False}"/>
                         <field name="employee_id"/>
                         <field name="employee_email"/>
                         <field name="employee_phone"/>
@@ -243,7 +244,7 @@
             <!-- <kanban default_group_by="campus_id"> -->
             <kanban>
                 <field name="name"/>
-                <field name="campus_id"/>
+                <field name="campus_ids"/>
                 <field name="employee_id"/>
                 <field name="employee_email"/>
                 <field name="employee_phone"/>
@@ -257,7 +258,10 @@
 
                             <!-- Détails -->
                             <div class="o_kanban_details">
-                                <div><span class="o_label">Campus :</span> <field name="campus_id"/></div>
+                                <div>
+                                    <span class="o_label">Campuses :</span>
+                                    <field name="campus_ids" widget="many2many_tags"/>
+                                </div>
                                 <div><span class="o_label">Responsable :</span> <field name="employee_id"/></div>
                                 <div><span class="o_label">Email :</span> <field name="employee_email"/></div>
                                 <div><span class="o_label">Téléphone :</span> <field name="employee_phone"/></div>
@@ -277,7 +281,7 @@
             <search>
                 <!-- Champs recherchables -->
                 <field name="name" string="Faculty"/>
-                <field name="campus_id" string="Campus"/>
+                <field name="campus_ids" string="Campuses"/>
                 <field name="employee_id" string="Responsable"/>
                 <field name="employee_email" string="Email"/>
                 <field name="employee_phone" string="Téléphone"/>
@@ -288,8 +292,6 @@
 
                 <!-- Group By -->
                 <group expand="0" string="Regrouper par">
-                    <filter name="group_by_campus" string="Campus"
-                            context="{'group_by':'campus_id'}"/>
                     <filter name="group_by_responsable" string="Responsable"
                             context="{'group_by':'employee_id'}"/>
                 </group>
