@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <menuitem id="school_root_menu" name="School"/>
+
+    <!-- Example: Students Menu -->
+    <!-- <menuitem id="school_students_menu"
+              name="Students"
+              parent="school_root_menu"
+              sequence="10"/> -->
+
+    <!-- Example: Teachers Menu -->
+    <!-- <menuitem id="school_teachers_menu"
+              name="Teachers"
+              parent="school_root_menu"
+              sequence="20"/> -->
+
+    <!-- Example: Classes Menu -->
+    <!-- <menuitem id="school_classes_menu"
+              name="Classes"
+              parent="school_root_menu"
+              sequence="30"/> -->
+
+     <!-- Menus -->
+    <menuitem id="menu_brains_root" 
+              name="Brains Campus"
+              sequence="10"/>
+
+        <!-- Campus main-->
+        <menuitem id="campus"
+                name="Campus"
+                parent="menu_brains_root"
+                sequence="1"/>
+
+            <!-- Campus -->
+            <menuitem id="menu_brains_campus" 
+                    name="Campus" 
+                    action="action_campus" 
+                    parent="campus"
+                    sequence="1"/>
+
+            <!-- Faculty -->
+            <menuitem id="menu_brains_faculte" 
+                    name="Faculty" 
+                    action="action_faculty" 
+                    parent="campus"
+                    sequence="2"/>
+
+            <!-- Speciality -->
+            <menuitem id="menu_brains_speciality" 
+                    name="Specialities" 
+                    action="action_speciality" 
+                    parent="campus"
+                    sequence="3"/>
+
+        <!-- Cours parent -->
+        <menuitem id="cours"
+                name="Cours"
+                parent="menu_brains_root"
+                sequence="3"/>
+            <!-- Cours -->
+            <menuitem id="menu_brains_cours" 
+                    name="Courses" 
+                    action="action_school_cours" 
+                    parent="cours"
+                    sequence="1"/>
+            <!-- Teachers -->   
+            <menuitem id="menu_brains_teachers" 
+                    name="Teachers" 
+                    action="open_view_employee_list_my"
+                    parent="cours"
+                    sequence="2"/>
+
+        <!-- Cursus parent -->
+        <menuitem id="cursus"
+                name="Cursus"
+                parent="menu_brains_root"
+                sequence="2"/>
+
+            <!-- Cursus -->
+            <menuitem id="menu_brains_cursus" 
+                    name="Cursus" 
+                    action="action_brains_cursus" 
+                    parent="cursus"
+                    sequence="1"/>
+
+            <!-- Levels -->
+            <menuitem id="menu_brains_level"   
+                    name="Levels" 
+                    parent="cursus"
+                    action="action_brains_level"
+                    sequence="4"/>
+
+            <!-- Semestres -->
+            <menuitem id="menu_brains_semestre"   
+                    name="Semesters" 
+                    parent="cursus"
+                    action="action_brains_semestre"
+                    sequence="5"/>
+
+        <!--  Employees -->
+        <menuitem
+            id="menu_hr_employee_user"
+            name="Contacts"
+            action="hr.open_view_employee_list_my"
+            parent="menu_brains_root"
+            sequence="8"/>
+
+        <!-- Students -->
+        <menuitem
+            id="menu_brains_students"
+            name="Students"
+            action="open_view_student_list_my"
+            parent="menu_brains_root"
+            sequence="9"/>
+
+        <!-- Paramètres -->
+        <menuitem id="menu_brains_settings" 
+                name="Settings" 
+                parent="menu_brains_root"
+                sequence="100000"/>
+
+            <!-- years -->
+            <menuitem id="menu_school_year" 
+                    name="School Years" 
+                    parent="menu_brains_settings" 
+                    action="action_school_year"
+                    sequence="2"/>
+
+
+
+    <!-- Add all other menuitems here, grouped under school_root_menu -->
+</odoo>

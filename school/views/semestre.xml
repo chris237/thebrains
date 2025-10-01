@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_brains_semestre_list" model="ir.ui.view">
+            <field name="name">brains.semestre.list</field>
+            <field name="model">brains.semestre</field>
+            <field name="arch" type="xml">
+                <list string="Semestres" create="false">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="level_id"/>
+                    <field name="cursus_id"/>
+                    <field name="speciality_id" />
+                </list>
+            </field>
+        </record>
+
+        <record id="view_brains_semestre_form" model="ir.ui.view">
+            <field name="name">brains.semestre.form</field>
+            <field name="model">brains.semestre</field>
+            <field name="arch" type="xml">
+                <form string="Semestre">
+                    <header>
+                        <button name="desactivate" string="Set Inactive" type="object" class="oe_highlight" invisible="state != 'active'"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,active,inactive"/>  
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="description"/>
+                            <field name="level_id"/>
+                            <field name="cursus_id"/>
+                            <field name="speciality_id"/>
+                            <field name="year_ids" 
+                                   widget="many2many_tags" 
+                                   options="{'no_create': True}" 
+                                   context="{'form_view_ref': 'school.view_school_year_form'}"
+                                   readonly ="1"/>
+                        </group>
+                    </sheet>
+                    <chatter reload_on_follower="True"/>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_brains_semestre_search" model="ir.ui.view">
+            <field name="name">brains.semestre.search</field>
+            <field name="model">brains.semestre</field>
+            <field name="arch" type="xml">
+                <search>
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="state"/>
+                    <field name="level_id"/>
+                    <field name="cursus_id"/>
+                    <field name="year_ids"/>
+
+                    <!-- Filtres -->
+                    <filter string="By Year" name="filter_by_year" domain="[]"
+                            context="{'group_by':'year_ids'}"/> 
+                    <filter string="By State" name="filter_by_state" domain="[]"
+                            context="{'group_by':'state'}"/>
+                    <filter string="By Level" name="filter_by_level" domain="[]"
+                            context="{'group_by':'level_id'}"/>
+                    <filter string="By Cursus" name="filter_by_cursus" domain="[]"
+                            context="{'group_by':'cursus_id'}"/>
+
+                    <!-- Group By -->
+                    <group expand="0" string="Group By">
+                        <filter string="Year" name="group_by_year" context="{'group_by':'year_ids'}"/>
+                        <filter string="Level" name="group_by_level" context="{'group_by':'level_id'}"/>
+                        <filter string="Cursus" name="group_by_cursus" context="{'group_by':'cursus_id'}"/>
+                        <filter string="State" name="group_by_state" context="{'group_by':'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="brains_semestre_view_search_groupby" model="ir.ui.view">
+            <field name="name">brains.semestre.view.search.groupby</field>
+            <field name="model">brains.semestre</field>
+            <field name="arch" type="xml">
+                <search string="Semestres">
+                    
+                    <!-- Champs à rechercher -->
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="level_id"/>
+                    <field name="cursus_id"/>
+                    <field name="state"/>
+
+                    <!-- Filtres rapides -->
+                    <filter string="Active" name="filter_active" domain="[('state','=','active')]"/>
+                    <filter string="Draft" name="filter_draft" domain="[('state','=','draft')]"/>
+                    <filter string="Inactive" name="filter_inactive" domain="[('state','=','inactive')]"/>
+
+                    <!-- Group By -->
+                    <group expand="0" string="Group By">
+                        <filter string="By Level" name="group_by_level" context="{'group_by':'level_id'}"/>
+                        <filter string="By Cursus" name="group_by_cursus" context="{'group_by':'cursus_id'}"/>
+                        <filter string="By State" name="group_by_state" context="{'group_by':'state'}"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+
+
+        <record id="action_brains_semestre" model="ir.actions.act_window">
+            <field name="name">Semestres</field>
+            <field name="res_model">brains.semestre</field>
+            <field name="view_mode">list,form</field>
+            <field name="search_view_id" ref="brains_semestre_view_search_groupby"/>
+        </record>
+
+        
+    </data>
+</odoo>
+    

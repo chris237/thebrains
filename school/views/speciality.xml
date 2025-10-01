@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- Liste Speciality -->
+    <record id="view_speciality_list" model="ir.ui.view">
+        <field name="name">brains.speciality.list</field>
+        <field name="model">brains.speciality</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="faculty_id"/>
+                <field name="guardiadhip"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Formulaire Speciality -->
+    <record id="view_speciality_form" model="ir.ui.view">
+        <field name="name">brains.speciality.form</field>
+        <field name="model">brains.speciality</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group string="Informations">
+                        <field name="name"/>
+                        <field name="faculty_id"/>
+                        <field name="guardiadhip"/>
+                    </group>
+                    <notebook>
+                        <page string="Cursus">
+                            <field name="cursus_ids" widget="one2many_list">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="code"/>
+                                    <field name="number_of_years"/>
+                                    <field name="level_ids" widget="many2many_tags"/>
+                                    <field name="semester_ids" widget="many2many_tags"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter reload_on_follower="True"/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Kanban Speciality -->
+    <record id="view_speciality_kanban" model="ir.ui.view">
+        <field name="name">brains.speciality.kanban</field>
+        <field name="model">brains.speciality</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="name"/>
+                <field name="faculty_id"/>
+                <field name="guardiadhip"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click o_kanban_record">
+                            <strong><field name="name"/></strong>
+                            <!-- <div><field name="position_ids" widget="many2many_tags"/></div> -->
+                            <div><field name="faculty_id"/></div>
+                            <div><field name="guardiadhip"/></div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Vue de recherche (Filtres + Group By) -->
+    <record id="view_speciality_search" model="ir.ui.view">
+        <field name="name">brains.speciality.search</field>
+        <field name="model">brains.speciality</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name" string="Speciality"/>
+                <field name="faculty_id" string="Faculty"/>
+                <field name="guardiadhip" string="Guardiadhip"/>
+
+                <!-- Filtres -->
+                <filter name="filter_faculty" string="By Faculty" domain="[]"
+                        context="{'group_by':'faculty_id'}"/>
+                <filter name="filter_guardiadhip" string="By Guardiadhip" domain="[]"
+                        context="{'group_by':'guardiadhip'}"/>
+
+                <!-- Groupe personnalisé -->
+                <group expand="0" string="Group By">
+                    <filter name="group_by_faculty" string="Faculty"
+                            context="{'group_by':'faculty_id'}"/>
+                    <filter name="group_by_guardiadhip" string="Guardiadhip"
+                            context="{'group_by':'guardiadhip'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Actions -->
+    <record id="action_speciality" model="ir.actions.act_window">
+        <field name="name">Speciality</field>
+        <field name="res_model">brains.speciality</field>
+        <field name="view_mode">list,form,kanban</field>
+        <field name="view_id" ref="view_speciality_list"/>
+        <field name="search_view_id" ref="view_speciality_search"/>
+    </record>
+    
+    <!-- Menus-->
+    <!-- <menuitem id="menu_brains_speciality" name="Speciality" parent="menu_brains_root" action="action_speciality"/> -->
+
+</odoo>

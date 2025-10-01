@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <!-- LIST VIEW -->
+    <record id="view_school_year_list" model="ir.ui.view">
+        <field name="name">brains.school.year.list</field>
+        <field name="model">brains.school.year</field>
+        <field name="arch" type="xml">
+            <list string="School Years" default_order="date_start desc">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="date_start"/>
+                <field name="date_end"/>
+                <field name="active"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- FORM VIEW -->
+    <record id="view_school_year_form" model="ir.ui.view">
+        <field name="name">brains.school.year.form</field>
+        <field name="model">brains.school.year</field>
+        <field name="arch" type="xml">
+            <form string="School Year">
+                <sheet>
+                    <group string="General Information">
+                        <field name="name"/>
+                        <field name="code"/>
+                        <field name="active"/>
+                    </group>
+                    <group string="Dates">
+                        <field name="date_start"/>
+                        <field name="date_end"/>
+                    </group>
+                    <notebook>
+                        <page string="Cursus">
+                            <field name="cursus_ids" create="false" edit="false" delete="false">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="code"/>
+                                    <field name="number_of_years"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Levels">
+                            <field name="level_ids" readonly="1">
+                                <list editable="bottom"  edit="false" create="false" delete="true">
+                                    <field name="name"/>
+                                    <field name="code"/>
+                                    <field name="cursus_id"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Semesters">
+                            <field name="semestre_ids" readonly="1">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="code"/>
+                                    <field name="level_id"/>
+                                    <field name="cursus_id"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter reload_on_follower="True"/>
+            </form>
+        </field>
+    </record>
+
+    <!-- KANBAN VIEW -->
+    <record id="view_school_year_kanban" model="ir.ui.view">
+        <field name="name">brains.school.year.kanban</field>
+        <field name="model">brains.school.year</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="active">
+                <field name="name"/>
+                <field name="code"/>
+                <field name="date_start"/>
+                <field name="date_end"/>
+                <field name="active"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click o_kanban_record">
+                            <div class="o_kanban_primary_left">
+                                <strong><field name="name"/></strong>
+                                <div><field name="code"/></div>
+                                <div><field name="date_start"/> → <field name="date_end"/></div>
+                                <div>
+                                    <span t-if="record.active.raw_value" class="badge badge-success">Active</span>
+                                    <span t-if="!record.active.raw_value" class="badge badge-danger">Inactive</span>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- SEARCH VIEW -->
+    <record id="view_school_year_search" model="ir.ui.view">
+        <field name="name">brains.school.year.search</field>
+        <field name="model">brains.school.year</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="code"/>
+                <field name="active"/>
+                <field name="date_start"/>
+                <field name="date_end"/>
+
+                <!-- Filtres -->
+                <filter string="Active" name="active" domain="[('active','=',True)]"/>
+                <filter string="Inactive" name="inactive" domain="[('active','=',False)]"/>
+
+                <!-- Group By -->
+                <group expand="0" string="Group By">
+                    <filter string="Active" name="group_by_active" context="{'group_by':'active'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- ACTION -->
+    <record id="action_school_year" model="ir.actions.act_window">
+        <field name="name">School Years</field>
+        <field name="res_model">brains.school.year</field>
+        <field name="view_mode">list,form,kanban</field>
+        <field name="search_view_id" ref="view_school_year_search"/>
+    </record>
+
+    <!-- MENU -->
+    
+</odoo>

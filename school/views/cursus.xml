@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="view_brains_cursus_list" model="ir.ui.view">
+            <field name="name">brains.cursus.list</field>
+            <field name="model">brains.cursus</field>
+            <field name="arch" type="xml">
+                <list string="Cursus">
+                    <field name="name"/>
+                    <field name="code"/>
+                    <field name="number_of_years"/>
+                    <field name="level_ids" widget="many2many_tags"/>
+                    <field name="semester_ids" widget="many2many_tags"/>
+                </list>
+            </field>
+        </record>
+
+        <record id="view_brains_cursus_form" model="ir.ui.view">
+            <field name="name">brains.cursus.form</field>
+            <field name="model">brains.cursus</field>
+            <field name="arch" type="xml">
+                <form string="Cursus">
+                    <header>
+                        <button name="action_generate_levels" string="Generate Level" type="object" class="oe_highlight" invisible="state != 'draft'"/>
+                        <button name="desactive" string="Set Inactive" type="object" class="oe_highlight" invisible="state != 'active'"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,active,inactive"/>
+                    </header>
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="code"/>
+                            <field name="number_of_years"/>
+                            <field name="speciality_id"/>
+                            <field name="description"/>
+                            <field name="years_ids" 
+                                   widget="many2many_tags" 
+                                   options="{'no_create': True}" 
+                                   context="{'form_view_ref': 'school.view_school_year_form'}"
+                                   readonly ="1"/>
+                        </group>
+
+                        <notebook>
+                            <page string="Levels">
+                                <field name="level_ids" widget="one2many_list">
+                                    <list editable="bottom" create="false" edit="false" delete="false"
+                                            decoration-danger="state == 'inactive'"
+                                            decoration-info="state == 'draft'"
+                                            decoration-success="state == 'active'">
+                                        <field name="name"/>
+                                        <field name="code"/>
+                                        <field name="description"/>
+                                        <field name="state"/>
+                                    </list>
+                                </field>
+                            </page>
+                            <page string="Semesters">
+                                <field name="semester_ids" widget="one2many_list">
+                                    <list editable="bottom" create="false" edit="false" delete="false"
+                                            decoration-danger="state == 'inactive'"
+                                            decoration-info="state == 'draft'"
+                                            decoration-success="state == 'active'">
+                                        <field name="name"/>
+                                        <field name="code"/>
+                                        <field name="description"/>
+                                        <field name="state"/>
+                                    </list>
+                                </field>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <chatter reload_on_follower="True"/>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_brains_cursus" model="ir.actions.act_window">
+            <field name="name">Cursus</field>
+            <field name="res_model">brains.cursus</field>
+            <field name="view_mode">list,form</field>
+        </record>
+
+    </data>
+</odoo>

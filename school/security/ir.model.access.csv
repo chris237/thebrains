@@ -1,0 +1,12 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_brains_speciality_user,access.brains.speciality,model_brains_speciality,,1,1,1,1
+access_brains_campus_user,access.brains.campus,model_brains_campus,,1,1,1,1
+access_brains_faculty_user,access.brains.faculty,model_brains_faculty,,1,1,1,1
+access_brains_employee_user,access.brains.employee,model_brains_employee,,1,1,1,1
+access_brains_employee_position_user,access.brains.employee.position,model_brains_employee_position,,1,1,1,1
+access_brains_employee_campus_user,access.brains.employee.campus,model_brains_employee_campus,,1,1,1,1
+access_brains_cursus_user,access.brains.cursus,model_brains_cursus,,1,1,1,1
+access_brains_semestre_user,access.brains.semestre,model_brains_semestre,,1,1,1,1
+access_brains_level_user,access.brains.level,model_brains_level,,1,1,1,1
+access_brains_year_sca_user,access.brains.school.year,model_brains_school_year,,1,1,1,1
+access_brains_cours_user,access.brains.cours,model_brains_cours,,1,1,1,1

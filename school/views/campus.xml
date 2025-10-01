@@ -1,0 +1,329 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+    <!-- Liste Employé 
+    <record id="view_employee_list" model="ir.ui.view">
+        <field name="name">brains.employee.list</field>
+        <field name="model">brains.employee</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="honorific"/>
+                <field name="name"/>
+                <field name="prename"/>
+                <field name="email"/>
+                <field name="phone"/>
+                <field name="position_ids" widget="many2many_tags"/>
+            </list>
+        </field>
+    </record>-->
+
+    <!-- Formulaire Employé 
+    <record id="view_employee_form" model="ir.ui.view">
+        <field name="name">brains.employee.form</field>
+        <field name="model">brains.employee</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="honorific"/>
+                        <field name="name"/>
+                        <field name="prename"/>
+                        <field name="email"/>
+                        <field name="phone"/>
+                        <field name="position_ids" widget="many2many_tags"/>
+                        <field name="is_teacher"/>
+                    </group>
+                    <notebook>
+                        <page string="Affectations">
+                            <field name="campus_affectation_ids">
+                                <list editable="bottom">
+                                    <field name="campus_id"/>
+                                    <field name="position_id"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter reload_on_follower="True"/>
+            </form>
+        </field>
+    </record>-->
+
+    <!-- Kanban Employé 
+    <record id="view_employee_kanban" model="ir.ui.view">
+        <field name="name">brains.employee.kanban</field>
+        <field name="model">brains.employee</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="honorific"/>
+                <field name="name"/>
+                <field name="position_ids"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click o_kanban_record">
+                            <strong><field name="honorific"/> <field name="name"/></strong>
+                            <div><field name="position_ids" widget="many2many_tags"/></div>
+                            <div><field name="email"/></div>
+                            <div><field name="phone"/></div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>-->
+
+    <!-- Liste Campus -->
+    <record id="view_campus_list" model="ir.ui.view">
+        <field name="name">brains.campus.list</field>
+        <field name="model">brains.campus</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="address"/>
+                <field name="faculty_ids" widget="many2many_tags"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Formulaire Campus -->
+    <record id="view_campus_form" model="ir.ui.view">
+        <field name="name">brains.campus.form</field>
+        <field name="model">brains.campus</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group string="Informations">
+                        <field name="name"/>
+                        <field name="address"/>
+                        <field name="longitude"/>
+                        <field name="latitude"/>
+                    </group>
+                    <!-- <group>
+                        <field name="secretary_ids" widget="many2many_tags"/>
+                        <field name="director_id"/>
+                        <field name="deputy_director_id"/>
+                    </group> -->
+                    <notebook>
+                        <page string="Affectations">
+                            <field name="employee_ids">
+                                <list editable="bottom">
+                                    <field name="employee_id"/>
+                                    <field name="position_id"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Faculty">
+                            <field name="faculty_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="employee_id"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter reload_on_follower="True"/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Kanban Campus -->
+    <record id="view_campus_kanban" model="ir.ui.view">
+        <field name="name">brains.campus.kanban</field>
+        <field name="model">brains.campus</field>
+        <field name="arch" type="xml">
+            <kanban>
+                <field name="name"/>
+                <field name="address"/>
+                <field name="faculty_ids"/>
+                <field name="longitude"/>
+                <field name="latitude"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click o_kanban_record">
+                            <!-- En-tête -->
+                            <div class="o_kanban_header">
+                                <strong><field name="name"/></strong>
+                            </div>
+                            
+                            <!-- Détails -->
+                            <div class="o_kanban_details">
+                                <div><span class="o_label">Adresse :</span> <field name="address"/></div>
+                                <div><span class="o_label">Facultés :</span> 
+                                    <field name="faculty_ids" widget="many2many_tags"/>
+                                </div>
+                                <div>
+                                    <t t-if="record.longitude.raw_value and record.latitude.raw_value">
+                                        🌍 [<t t-esc="record.longitude.value"/> , <t t-esc="record.latitude.value"/>]
+                                    </t>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Liste Positions -->
+    <record id="view_employee_position_list" model="ir.ui.view">
+        <field name="name">brains.employee.position.list</field>
+        <field name="model">brains.employee.position</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Formulaire Positions -->
+    <record id="view_employee_position_form" model="ir.ui.view">
+        <field name="name">brains.employee.position.form</field>
+        <field name="model">brains.employee.position</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <field name="name"/>
+                </sheet>
+                <chatter reload_on_follower="True"/>
+            </form>
+        </field>
+    </record>
+
+
+    <!-- Liste faclty -->
+    <record id="view_faculte_list" model="ir.ui.view">
+        <field name="name">brains.faculty.list</field>
+        <field name="model">brains.faculty</field>
+        <field name="arch" type="xml">
+            <list>
+                <field name="name"/>
+                <field name="employee_id"/>
+                <field name="employee_email"/>
+                <field name="employee_phone"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Formulaire faculty -->
+    <record id="view_faculte_form" model="ir.ui.view">
+        <field name="name">brains.faculty.form</field>
+        <field name="model">brains.faculty</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group string="Informations">
+                        <field name="name"/>
+                        <field name="campus_id"/>
+                        <field name="employee_id"/>
+                        <field name="employee_email"/>
+                        <field name="employee_phone"/>
+                    </group>
+                    <notebook>
+                        <page string="Speciality">
+                            <field name="speciality_ids">
+                                <list editable="bottom">
+                                    <field name="name"/>
+                                    <field name="guardiadhip"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter reload_on_follower="True"/>
+            </form>
+        </field>
+    </record>
+
+     <!-- Kanban Faculty -->
+    <record id="view_faculte_kanban" model="ir.ui.view">
+        <field name="name">brains.faculty.kanban</field>
+        <field name="model">brains.faculty</field>
+        <field name="arch" type="xml">
+            <!-- <kanban default_group_by="campus_id"> -->
+            <kanban>
+                <field name="name"/>
+                <field name="campus_id"/>
+                <field name="employee_id"/>
+                <field name="employee_email"/>
+                <field name="employee_phone"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_kanban_global_click o_kanban_record">
+                            <!-- En-tête -->
+                            <div class="o_kanban_header">
+                                <strong><field name="name"/></strong>
+                            </div>
+
+                            <!-- Détails -->
+                            <div class="o_kanban_details">
+                                <div><span class="o_label">Campus :</span> <field name="campus_id"/></div>
+                                <div><span class="o_label">Responsable :</span> <field name="employee_id"/></div>
+                                <div><span class="o_label">Email :</span> <field name="employee_email"/></div>
+                                <div><span class="o_label">Téléphone :</span> <field name="employee_phone"/></div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Vue de recherche (Filtres + Group By) -->
+    <record id="view_faculte_search" model="ir.ui.view">
+        <field name="name">brains.faculty.search</field>
+        <field name="model">brains.faculty</field>
+        <field name="arch" type="xml">
+            <search>
+                <!-- Champs recherchables -->
+                <field name="name" string="Faculty"/>
+                <field name="campus_id" string="Campus"/>
+                <field name="employee_id" string="Responsable"/>
+                <field name="employee_email" string="Email"/>
+                <field name="employee_phone" string="Téléphone"/>
+
+                <!-- Filtres -->
+                <filter name="filter_by_email" string="Avec Email" domain="[('employee_email','!=',False)]"/>
+                <filter name="filter_no_email" string="Sans Email" domain="[('employee_email','=',False)]"/>
+
+                <!-- Group By -->
+                <group expand="0" string="Regrouper par">
+                    <filter name="group_by_campus" string="Campus"
+                            context="{'group_by':'campus_id'}"/>
+                    <filter name="group_by_responsable" string="Responsable"
+                            context="{'group_by':'employee_id'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Actions 
+    <record id="action_employee" model="ir.actions.act_window">
+        <field name="name">Employés</field>
+        <field name="res_model">brains.employee</field>
+        <field name="view_mode">list,form,kanban</field>
+    </record>-->
+
+    <record id="action_campus" model="ir.actions.act_window">
+        <field name="name">Campus</field>
+        <field name="res_model">brains.campus</field>
+        <field name="view_mode">list,form,kanban</field>
+    </record>
+
+    <record id="action_employee_position" model="ir.actions.act_window">
+        <field name="name">Postes</field>
+        <field name="res_model">brains.employee.position</field>
+        <field name="view_mode">list,form</field>
+    </record>
+
+    <record id="action_faculty" model="ir.actions.act_window">
+        <field name="name">Faculties</field>
+        <field name="res_model">brains.faculty</field>
+        <field name="view_mode">list,form,kanban</field>
+        <field name="view_id" ref="view_faculte_list"/>
+        <field name="search_view_id" ref="view_faculte_search"/>
+    </record>
+
+   
+
+</odoo>
