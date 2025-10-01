@@ -14,4 +14,13 @@ class Speciality(models.Model):
 
     faculty_id = fields.Many2one("brains.faculty", string="Faculty", required=True)
 
+    campus_ids = fields.Many2many(
+        "brains.campus",
+        "brains_speciality_campus_rel",
+        "speciality_id",
+        "campus_id",
+        string="Campuses",
+    )
+
     cursus_ids = fields.One2many("brains.cursus", "speciality_id", string="Cursus")
+

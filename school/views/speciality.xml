@@ -9,6 +9,7 @@
                 <field name="name"/>
                 <field name="faculty_id"/>
                 <field name="guardiadhip"/>
+                <field name="campus_ids" widget="many2many_tags"/>
             </list>
         </field>
     </record>
@@ -22,8 +23,9 @@
                 <sheet>
                     <group string="Informations">
                         <field name="name"/>
-                        <field name="faculty_id"/>
+                        <field name="faculty_id" options="{'no_create': True, 'no_create_edit': True}"/>
                         <field name="guardiadhip"/>
+                        <field name="campus_ids" widget="many2many_tags" domain="[('faculty_ids', 'in', faculty_id)]"/>
                     </group>
                     <notebook>
                         <page string="Cursus">
