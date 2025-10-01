@@ -88,6 +88,9 @@ class EmployeeHenrit(models.Model):
     )
     is_teacher = fields.Boolean(string="Is Teacher ?")
     is_student = fields.Boolean(string="Is Student ?")
+    teacher_course_ids = fields.One2many(
+        "brains.teacher.course", "teacher_id", string="Courses"
+    )
 
     
 

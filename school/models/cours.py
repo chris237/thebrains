@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-from odoo import models, fields
+from odoo import models, fields, api
 
 class Cour(models.Model):
     _name = "brains.cours"
@@ -56,6 +56,26 @@ class Cour(models.Model):
         tracking=True
     )
 
+    faculty_id = fields.Many2one(
+        "brains.faculty",
+        related="specialty_id.faculty_id",
+        string="Faculty",
+        store=True,
+        readonly=True,
+        tracking=True,
+    )
+
+    campus_ids = fields.Many2many(
+        "brains.campus",
+        "brains_course_campus_rel",
+        "course_id",
+        "campus_id",
+        string="Campuses",
+        compute="_compute_campus_ids",
+        store=True,
+        readonly=True,
+    )
+
     semester_id = fields.Many2one(
         "brains.semestre",
         string="Semester",
@@ -69,3 +89,9 @@ class Cour(models.Model):
         required=True,
         tracking=True
     )
+
+    @api.depends("specialty_id.campus_ids", "faculty_id.campus_ids")
+    def _compute_campus_ids(self):
+        for course in self:
+            campuses = course.specialty_id.campus_ids | course.faculty_id.campus_ids
+            course.campus_ids = campuses
