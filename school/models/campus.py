@@ -32,8 +32,12 @@ class Campus(models.Model):
         "brains.employee.campus", "campus_id", string="Affectations"
     )
 
-    faculty_ids = fields.One2many(
-        "brains.faculty", "campus_id", string="Faculty", tracking=True, store=True
+    faculty_ids = fields.Many2many(
+        "brains.faculty",
+        "brains_campus_faculty_rel",
+        "campus_id",
+        "faculty_id",
+        string="Faculties",
     )
 
 
@@ -124,8 +128,14 @@ class Faculty(models.Model):
     employee_email = fields.Char(related="employee_id.email", string="Email", store=True)
     employee_phone = fields.Char(related="employee_id.phone", string="Phone", store=True)
 
-
-    campus_id = fields.Many2one("brains.campus", string="Campus", required=True)
+    campus_ids = fields.Many2many(
+        "brains.campus",
+        "brains_campus_faculty_rel",
+        "faculty_id",
+        "campus_id",
+        string="Campuses",
+        required=True,
+    )
     speciality_ids = fields.One2many(
         "brains.speciality", "faculty_id", string="Speciality"
     )
