@@ -91,11 +91,17 @@
                     sequence="4"/>
 
             <!-- Semestres -->
-            <menuitem id="menu_brains_semestre"   
-                    name="Semesters" 
+            <menuitem id="menu_brains_semestre"
+                    name="Semesters"
                     parent="cursus"
                     action="action_brains_semestre"
                     sequence="5"/>
+
+            <menuitem id="menu_brains_classroom"
+                    name="Classes"
+                    parent="cursus"
+                    action="action_brains_classroom"
+                    sequence="6"/>
 
         <!--  Employees -->
         <menuitem
@@ -112,6 +118,13 @@
             action="open_view_student_list_my"
             parent="menu_brains_root"
             sequence="9"/>
+
+        <menuitem
+            id="menu_brains_timetable"
+            name="Timetables"
+            action="action_brains_timetable"
+            parent="menu_brains_root"
+            sequence="9.5"/>
 
         <!-- Paramètres -->
         <menuitem id="menu_brains_settings" 

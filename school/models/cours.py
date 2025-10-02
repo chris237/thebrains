@@ -91,6 +91,12 @@ class Cour(models.Model):
         tracking=True
     )
 
+    teacher_course_ids = fields.One2many(
+        "brains.teacher.course",
+        "course_id",
+        string="Teacher Assignments",
+    )
+
     @api.depends("specialty_id.campus_ids", "faculty_id.campus_ids")
     def _compute_campus_ids(self):
         for course in self:

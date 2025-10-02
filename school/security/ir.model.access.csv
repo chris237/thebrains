@@ -11,3 +11,5 @@ access_brains_level_user,access.brains.level,model_brains_level,,1,1,1,1
 access_brains_year_sca_user,access.brains.school.year,model_brains_school_year,,1,1,1,1
 access_brains_cours_user,access.brains.cours,model_brains_cours,,1,1,1,1
 access_brains_teacher_course_user,access.brains.teacher.course,model_brains_teacher_course,,1,1,1,1
+access_brains_classroom_user,access.brains.classroom,model_brains_classroom,,1,1,1,1
+access_brains_timetable_user,access.brains.timetable,model_brains_timetable,,1,1,1,1
