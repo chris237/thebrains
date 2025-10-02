@@ -15,6 +15,7 @@ This module .
         'security/ir.model.access.csv',
         'views/campus.xml',
         'views/employee.xml',
+        'views/teacher_course.xml',
         'views/speciality.xml',
         'views/cursus.xml',
         'views/level.xml',

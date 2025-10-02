@@ -91,6 +91,18 @@ class EmployeeHenrit(models.Model):
     teacher_course_ids = fields.One2many(
         "brains.teacher.course", "teacher_id", string="Courses"
     )
+    course_ids = fields.Many2many(
+        "brains.cours",
+        string="Courses",
+        compute="_compute_teacher_courses",
+        compute_sudo=True,
+        readonly=True,
+    )
+    teacher_course_count = fields.Integer(
+        string="Course Assignments",
+        compute="_compute_teacher_courses",
+        compute_sudo=True,
+    )
 
     
 
@@ -109,6 +121,23 @@ class EmployeeHenrit(models.Model):
             self.is_student = False
         elif self.is_student:
             self.is_teacher = False
+
+    @api.depends("teacher_course_ids", "teacher_course_ids.course_id")
+    def _compute_teacher_courses(self):
+        for employee in self:
+            assignments = employee.teacher_course_ids.filtered("course_id")
+            employee.course_ids = assignments.mapped("course_id")
+            employee.teacher_course_count = len(assignments)
+
+    def action_view_teacher_courses(self):
+        self.ensure_one()
+        action = self.env.ref("school.action_teacher_course_assignments").read()[0]
+        action["domain"] = [("teacher_id", "=", self.id)]
+        action["context"] = {
+            "default_teacher_id": self.id,
+            "search_default_teacher_id": self.id,
+        }
+        return action
 
 class EmployeeCampus(models.Model):
     _name = "brains.employee.campus"
