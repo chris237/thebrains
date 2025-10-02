@@ -132,7 +132,17 @@
             <field name="work_phone" position="after">
                 <field name="is_teacher"/>
                 <field name="is_student"/>
-            </field>    
+            </field>
+
+            <xpath expr="//div[@class='oe_button_box']" position="inside">
+                <button name="action_view_teacher_courses" type="object" class="oe_stat_button"
+                        attrs="{'invisible': [('is_teacher', '=', False)]}">
+                    <div class="o_field_widget o_stat_info">
+                        <span class="o_stat_value"><field name="teacher_course_count"/></span>
+                        <span class="o_stat_text">Courses</span>
+                    </div>
+                </button>
+            </xpath>
 
             <xpath expr="//sheet/notebook" position="inside">
                 <page string="Affectations" invisible="is_teacher != True">
@@ -145,18 +155,10 @@
                     </field>
                 </page>
                 <page string="Cours enseignés" attrs="{'invisible': [('is_teacher', '=', False)]}">
-                    <field name="teacher_course_ids" context="{'default_teacher_id': active_id}">
-                        <tree editable="bottom">
-                            <field name="course_id"/>
-                            <field name="campus_ids" widget="many2many_tags" domain="[('id', 'in', course_id.campus_ids.ids)]"/>
-                        </tree>
-                        <form string="Cours enseigné">
-                            <group>
-                                <field name="course_id"/>
-                                <field name="campus_ids" widget="many2many_tags" domain="[('id', 'in', course_id.campus_ids.ids)]"/>
-                            </group>
-                        </form>
-                    </field>
+                    <group>
+                        <field name="course_ids" widget="many2many_tags" readonly="1"/>
+                    </group>
+                    <label string="Use the Courses smart button above to manage assignments."/>
                 </page>
             </xpath>
         </field>

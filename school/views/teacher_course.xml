@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <record id="view_teacher_course_tree" model="ir.ui.view">
+        <field name="name">brains.teacher.course.tree</field>
+        <field name="model">brains.teacher.course</field>
+        <field name="arch" type="xml">
+            <tree string="Teacher Courses" editable="bottom">
+                <field name="teacher_id" readonly="1"/>
+                <field name="course_id"/>
+                <field name="campus_ids" widget="many2many_tags"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_teacher_course_form" model="ir.ui.view">
+        <field name="name">brains.teacher.course.form</field>
+        <field name="model">brains.teacher.course</field>
+        <field name="arch" type="xml">
+            <form string="Course Assignment">
+                <sheet>
+                    <group>
+                        <field name="teacher_id" readonly="1"/>
+                        <field name="course_id" required="1"/>
+                        <field name="campus_ids" widget="many2many_tags"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_teacher_course_search" model="ir.ui.view">
+        <field name="name">brains.teacher.course.search</field>
+        <field name="model">brains.teacher.course</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="teacher_id"/>
+                <field name="course_id"/>
+                <filter name="my_assignments" string="My Courses" domain="[('teacher_id', '=', uid)]"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_teacher_course_assignments" model="ir.actions.act_window">
+        <field name="name">Teacher Courses</field>
+        <field name="res_model">brains.teacher.course</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{'default_teacher_id': active_id}</field>
+        <field name="search_view_id" ref="view_teacher_course_search"/>
+    </record>
+</odoo>
