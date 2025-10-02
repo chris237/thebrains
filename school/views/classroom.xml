@@ -51,13 +51,13 @@
                         </page>
                         <page string="Timetables">
                             <field name="timetable_ids">
-                                <tree editable="bottom">
+                                <list editable="bottom">
                                     <field name="start_datetime"/>
                                     <field name="end_datetime"/>
                                     <field name="course_id"/>
                                     <field name="teacher_id"/>
                                     <field name="location"/>
-                                </tree>
+                                </list>
                             </field>
                         </page>
                     </notebook>

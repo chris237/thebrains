@@ -73,6 +73,19 @@
         </field>
     </record>
 
+    <!-- CALENDAR VIEW -->
+    <record id="view_brains_timetable_calendar" model="ir.ui.view">
+        <field name="name">brains.timetable.calendar</field>
+        <field name="model">brains.timetable</field>
+        <field name="arch" type="xml">
+            <calendar string="Timetable" date_start="start_datetime" date_stop="end_datetime" color="classroom_id">
+                <field name="course_id"/>
+                <field name="teacher_id"/>
+                <field name="classroom_id"/>
+            </calendar>
+        </field>
+    </record>
+
     <!-- ACTION -->
     <record id="action_brains_timetable" model="ir.actions.act_window">
         <field name="name">Timetables</field>
@@ -101,18 +114,5 @@
         <field name="view_mode">form</field>
         <field name="view_id" ref="view_brains_timetable_form"/>
         <field name="act_window_id" ref="action_brains_timetable"/>
-    </record>
-
-    <!-- CALENDAR VIEW -->
-    <record id="view_brains_timetable_calendar" model="ir.ui.view">
-        <field name="name">brains.timetable.calendar</field>
-        <field name="model">brains.timetable</field>
-        <field name="arch" type="xml">
-            <calendar string="Timetable" date_start="start_datetime" date_stop="end_datetime" color="classroom_id">
-                <field name="course_id"/>
-                <field name="teacher_id"/>
-                <field name="classroom_id"/>
-            </calendar>
-        </field>
     </record>
 </odoo>
