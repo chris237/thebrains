@@ -25,7 +25,10 @@
                         <field name="name"/>
                         <field name="faculty_id" options="{'no_create': True, 'no_create_edit': True}"/>
                         <field name="guardiadhip"/>
-                        <field name="campus_ids" widget="many2many_tags" domain="[('faculty_ids', 'in', faculty_id)]"/>
+                        <field name="campus_ids"
+                               widget="many2many_tags"
+                               domain="[('faculty_ids', 'in', faculty_id)]"
+                               options="{'no_create': True, 'no_create_edit': True}"/>
                     </group>
                     <notebook>
                         <page string="Cursus">
