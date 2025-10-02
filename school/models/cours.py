@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from odoo import models, fields, api
+from odoo.exceptions import ValidationError
 
 class Cour(models.Model):
     _name = "brains.cours"
@@ -49,17 +50,17 @@ class Cour(models.Model):
 
     specialty_id = fields.Many2one(
         "brains.speciality",
-        related="semester_id.level_id.cursus_id.speciality_id",
         string="Speciality",
+        compute="_compute_speciality_and_faculty",
         store=True,
         readonly=True,
-        tracking=True
+        tracking=True,
     )
 
     faculty_id = fields.Many2one(
         "brains.faculty",
-        related="specialty_id.faculty_id",
         string="Faculty",
+        compute="_compute_speciality_and_faculty",
         store=True,
         readonly=True,
         tracking=True,
@@ -95,3 +96,29 @@ class Cour(models.Model):
         for course in self:
             campuses = course.specialty_id.campus_ids | course.faculty_id.campus_ids
             course.campus_ids = campuses
+
+    @api.depends(
+        "semester_id",
+        "semester_id.level_id",
+        "semester_id.level_id.cursus_id",
+        "semester_id.level_id.cursus_id.speciality_id",
+        "semester_id.level_id.cursus_id.speciality_id.faculty_id",
+    )
+    def _compute_speciality_and_faculty(self):
+        for course in self:
+            semester = course.semester_id
+            speciality = semester.level_id.cursus_id.speciality_id if semester else self.env["brains.speciality"]
+            faculty = speciality.faculty_id if speciality else self.env["brains.faculty"]
+            course.specialty_id = speciality
+            course.faculty_id = faculty
+
+    @api.constrains("semester_id")
+    def _check_semester_has_speciality(self):
+        for course in self:
+            if not course.semester_id:
+                continue
+            speciality = course.semester_id.level_id.cursus_id.speciality_id
+            if not speciality:
+                raise ValidationError(
+                    "The selected semester must be linked to a speciality to create a course."
+                )
