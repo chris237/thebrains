@@ -26,6 +26,7 @@ class TeacherCourse(models.Model):
         "assignment_id",
         "campus_id",
         string="Campuses",
+        required=True,
     )
 
     _sql_constraints = [
@@ -35,6 +36,14 @@ class TeacherCourse(models.Model):
             "This teacher is already assigned to this course.",
         )
     ]
+
+    @api.constrains("campus_ids")
+    def _check_campuses_selected(self):
+        for record in self:
+            if not record.campus_ids:
+                raise ValidationError(
+                    "You must select at least one campus for this assignment."
+                )
 
     @api.constrains("campus_ids", "course_id")
     def _check_campuses_within_course(self):
@@ -49,6 +58,15 @@ class TeacherCourse(models.Model):
     @api.onchange("course_id")
     def _onchange_course_id(self):
         if self.course_id:
-            self.campus_ids = self.course_id.campus_ids
+            course_campuses = self.course_id.campus_ids
+            self.campus_ids = course_campuses
+            return {
+                "domain": {
+                    "campus_ids": [
+                        ("id", "in", course_campuses.ids)
+                    ]
+                }
+            }
         else:
             self.campus_ids = False
+            return {"domain": {"campus_ids": []}}
