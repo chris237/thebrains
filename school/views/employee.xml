@@ -136,7 +136,7 @@
 
             <xpath expr="//div[@class='oe_button_box']" position="inside">
                 <button name="action_view_teacher_courses" type="object" class="oe_stat_button"
-                        attrs="{'invisible': [('is_teacher', '=', False)]}">
+                        invisible = "is_teacher == False">
                     <div class="o_field_widget o_stat_info">
                         <span class="o_stat_value"><field name="teacher_course_count"/></span>
                         <span class="o_stat_text">Courses</span>
@@ -154,11 +154,11 @@
                         </list>
                     </field>
                 </page>
-                <page string="Cours enseignés" attrs="{'invisible': [('is_teacher', '=', False)]}">
+                <page string="Cours enseignés" invisible="is_teacher != True">
                     <group>
                         <field name="course_ids" widget="many2many_tags" readonly="1"/>
                     </group>
-                    <label string="Use the Courses smart button above to manage assignments."/>
+                    <span class="o_form_label">Use the Courses smart button above to manage assignments.</span>
                 </page>
             </xpath>
         </field>
