@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- LIST VIEW -->
+    <record id="view_brains_timetable_list" model="ir.ui.view">
+        <field name="name">brains.timetable.list</field>
+        <field name="model">brains.timetable</field>
+        <field name="arch" type="xml">
+            <list string="Timetables" default_order="start_datetime asc">
+                <field name="name"/>
+                <field name="classroom_id"/>
+                <field name="course_id"/>
+                <field name="teacher_id"/>
+                <field name="campus_id"/>
+                <field name="semester_id"/>
+                <field name="year_id"/>
+                <field name="start_datetime"/>
+                <field name="end_datetime"/>
+                <field name="location"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- FORM VIEW -->
+    <record id="view_brains_timetable_form" model="ir.ui.view">
+        <field name="name">brains.timetable.form</field>
+        <field name="model">brains.timetable</field>
+        <field name="arch" type="xml">
+            <form string="Timetable">
+                <sheet>
+                    <group string="General Information">
+                        <field name="classroom_id"/>
+                        <field name="course_id" domain="[('semester_id','=',semester_id), ('years_id','=',year_id)]"/>
+                        <field name="teacher_id" domain="[('is_teacher','=',True)]"/>
+                        <field name="location"/>
+                    </group>
+                    <group string="Schedule">
+                        <field name="start_datetime"/>
+                        <field name="end_datetime"/>
+                    </group>
+                    <group string="Context" colspan="2">
+                        <field name="campus_id" readonly="1"/>
+                        <field name="semester_id" readonly="1"/>
+                        <field name="year_id" readonly="1"/>
+                        <field name="level_id" readonly="1"/>
+                        <field name="cursus_id" readonly="1"/>
+                        <field name="speciality_id" readonly="1"/>
+                    </group>
+                    <group string="Notes">
+                        <field name="notes" nolabel="1"/>
+                    </group>
+                </sheet>
+                <chatter reload_on_follower="True"/>
+            </form>
+        </field>
+    </record>
+
+    <!-- SEARCH VIEW -->
+    <record id="view_brains_timetable_search" model="ir.ui.view">
+        <field name="name">brains.timetable.search</field>
+        <field name="model">brains.timetable</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="classroom_id"/>
+                <field name="course_id"/>
+                <field name="teacher_id"/>
+                <field name="campus_id"/>
+                <field name="semester_id"/>
+                <field name="year_id"/>
+                <filter string="By Class" name="group_class" context="{'group_by': 'classroom_id'}"/>
+                <filter string="By Teacher" name="group_teacher" context="{'group_by': 'teacher_id'}"/>
+                <filter string="By Day" name="group_day" context="{'group_by': 'start_datetime:day'}"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- ACTION -->
+    <record id="action_brains_timetable" model="ir.actions.act_window">
+        <field name="name">Timetables</field>
+        <field name="res_model">brains.timetable</field>
+        <field name="view_mode">calendar,list,form</field>
+        <field name="search_view_id" ref="view_brains_timetable_search"/>
+        <field name="context">{'search_default_group_class': 1}</field>
+    </record>
+
+    <record id="action_brains_timetable_calendar_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="1"/>
+        <field name="view_mode">calendar</field>
+        <field name="view_id" ref="view_brains_timetable_calendar"/>
+        <field name="act_window_id" ref="action_brains_timetable"/>
+    </record>
+
+    <record id="action_brains_timetable_tree_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="2"/>
+        <field name="view_mode">list</field>
+        <field name="view_id" ref="view_brains_timetable_list"/>
+        <field name="act_window_id" ref="action_brains_timetable"/>
+    </record>
+
+    <record id="action_brains_timetable_form_view" model="ir.actions.act_window.view">
+        <field name="sequence" eval="3"/>
+        <field name="view_mode">form</field>
+        <field name="view_id" ref="view_brains_timetable_form"/>
+        <field name="act_window_id" ref="action_brains_timetable"/>
+    </record>
+
+    <!-- CALENDAR VIEW -->
+    <record id="view_brains_timetable_calendar" model="ir.ui.view">
+        <field name="name">brains.timetable.calendar</field>
+        <field name="model">brains.timetable</field>
+        <field name="arch" type="xml">
+            <calendar string="Timetable" date_start="start_datetime" date_stop="end_datetime" color="classroom_id">
+                <field name="course_id"/>
+                <field name="teacher_id"/>
+                <field name="classroom_id"/>
+            </calendar>
+        </field>
+    </record>
+</odoo>

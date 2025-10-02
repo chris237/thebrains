@@ -22,6 +22,8 @@ This module .
         'views/semestre.xml',
         'views/year_sca.xml',
         'views/cours.xml',
+        'views/classroom.xml',
+        'views/timetable.xml',
         'views/menu.xml',
     ],
     'images': [

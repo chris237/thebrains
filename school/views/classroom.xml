@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- LIST VIEW -->
+    <record id="view_brains_classroom_list" model="ir.ui.view">
+        <field name="name">brains.classroom.list</field>
+        <field name="model">brains.classroom</field>
+        <field name="arch" type="xml">
+            <list string="Classes" default_order="name asc">
+                <field name="name"/>
+                <field name="campus_id"/>
+                <field name="semester_id"/>
+                <field name="year_id"/>
+                <field name="level_id"/>
+                <field name="cursus_id"/>
+                <field name="speciality_id"/>
+                <field name="faculty_id"/>
+                <field name="student_ids" widget="many2many_tags"/>
+                <field name="teacher_ids" widget="many2many_tags"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- FORM VIEW -->
+    <record id="view_brains_classroom_form" model="ir.ui.view">
+        <field name="name">brains.classroom.form</field>
+        <field name="model">brains.classroom</field>
+        <field name="arch" type="xml">
+            <form string="Class">
+                <sheet>
+                    <group string="Identification">
+                        <field name="name" readonly="1"/>
+                        <field name="code"/>
+                        <field name="campus_id"/>
+                    </group>
+                    <group string="Academic Information" colspan="2">
+                        <field name="year_id"/>
+                        <field name="semester_id" domain="[('year_ids','=',year_id)]"/>
+                        <field name="level_id" readonly="1"/>
+                        <field name="cursus_id" readonly="1"/>
+                        <field name="speciality_id" readonly="1"/>
+                        <field name="faculty_id" readonly="1"/>
+                    </group>
+                    <notebook>
+                        <page string="Students">
+                            <field name="student_ids" widget="many2many_tags"
+                                   context="{'default_is_student': True}"/>
+                        </page>
+                        <page string="Teachers">
+                            <field name="teacher_ids" widget="many2many_tags"
+                                   context="{'default_is_teacher': True}"/>
+                        </page>
+                        <page string="Timetables">
+                            <field name="timetable_ids">
+                                <tree editable="bottom">
+                                    <field name="start_datetime"/>
+                                    <field name="end_datetime"/>
+                                    <field name="course_id"/>
+                                    <field name="teacher_id"/>
+                                    <field name="location"/>
+                                </tree>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+                <chatter reload_on_follower="True"/>
+            </form>
+        </field>
+    </record>
+
+    <!-- SEARCH VIEW -->
+    <record id="view_brains_classroom_search" model="ir.ui.view">
+        <field name="name">brains.classroom.search</field>
+        <field name="model">brains.classroom</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="name"/>
+                <field name="campus_id"/>
+                <field name="year_id"/>
+                <field name="semester_id"/>
+                <field name="level_id"/>
+                <field name="cursus_id"/>
+                <field name="speciality_id"/>
+                <field name="faculty_id"/>
+                <filter string="By Campus" name="group_campus" context="{'group_by': 'campus_id'}"/>
+                <filter string="By Academic Year" name="group_year" context="{'group_by': 'year_id'}"/>
+                <filter string="By Semester" name="group_semester" context="{'group_by': 'semester_id'}"/>
+            </search>
+        </field>
+    </record>
+
+    <!-- ACTION -->
+    <record id="action_brains_classroom" model="ir.actions.act_window">
+        <field name="name">Classes</field>
+        <field name="res_model">brains.classroom</field>
+        <field name="view_mode">list,form</field>
+        <field name="view_id" ref="view_brains_classroom_list"/>
+        <field name="search_view_id" ref="view_brains_classroom_search"/>
+        <field name="context">{'group_by': ['campus_id','year_id']}</field>
+    </record>
+</odoo>
